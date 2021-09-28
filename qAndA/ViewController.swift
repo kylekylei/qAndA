@@ -37,11 +37,11 @@ class ViewController: UIViewController {
     @IBOutlet var numberImage: [UIImageView]!
     
     var Questions = [Question]()
-    var indext = 0
+    var index = 0
     
    
     func updateUI() {
-        questionLabel.text = Questions[indext].description
+        questionLabel.text = Questions[index].description
         ansswerLabel.text = ""
     }
     
@@ -85,16 +85,15 @@ class ViewController: UIViewController {
 
     @IBAction func nextQuestion(_ sender: Any) {
         
-        if indext < 9 {
-            indext = (indext + 1) % (Questions.count)
+        if index < 9 {
+            index = (index + 1) % (Questions.count)
             updateUI()
             
             for number in numberImage {
-                let image = UIImage(systemName: "\(indext + 1).square.fill")
+                let image = UIImage(systemName: "\(index + 1).square.fill")
                 number.image = image
             }
-                    
-            
+    
             /*
             if indext < Questions.count-1{
                 indext += 1
@@ -111,10 +110,10 @@ class ViewController: UIViewController {
             alertController.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Try again", style: .default, handler: {
                 (action:UIAlertAction!) -> Void in
-                self.indext = 0
+                self.index = 0
                 
                 for number in self.numberImage {
-                    let image = UIImage(systemName: "\(self.indext + 1).square.fill")
+                    let image = UIImage(systemName: "\(self.index + 1).square.fill")
                     number.image = image
                 }
                 self.Questions.shuffle()
@@ -123,15 +122,11 @@ class ViewController: UIViewController {
             }))
             present(alertController, animated: true, completion: nil)
         }
-        
-        
-        
-        
     }
     
     @IBAction func showAnswer(_ sender: Any) {
-        answerView.isHidden = false
-        ansswerLabel.text = Questions[indext].answer
+
+        ansswerLabel.text = Questions[index].answer
         
         UIView.transition(from: questionView, to: answerView, duration: 1, options: .transitionFlipFromLeft, completion: nil)
         perform(#selector(flipBack), with: nil, afterDelay: 2)
